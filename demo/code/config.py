@@ -1,0 +1,22 @@
+import sys
+from pathlib import Path
+
+from loguru import logger
+
+USE_SIMPLE_LOGGER = True
+PROXIES = "http://127.0.0.1:7897"
+# PROXIES = None
+IMAGE_BASE_URL = "https://raw.githubusercontent.com/kitUIN/PicImageSearch/main/demo/images"
+# Note: Google search requires the `NID` cookie (when NOT logged into any Google account), expected format: `NID=...`
+GOOGLE_COOKIES = "SEARCH_SAMESITE=CgQIvp4B; AEC=AVh_V2ibKIsDU0vfhfaUcTqn3czM7KM0xlY2kiWUMcxuOA14U-oBIyzOmw; __Secure-1PSIDTS=sidts-CjIB5H03P2-pZNRn9hXlfML4LfdHC8d7RYTsT4WBAoWImX5wAbv_POIEFif5LFIHbmu2qxAA; __Secure-3PSIDTS=sidts-CjIB5H03P2-pZNRn9hXlfML4LfdHC8d7RYTsT4WBAoWImX5wAbv_POIEFif5LFIHbmu2qxAA; SID=g.a000zQiQ2iZtrczg0AHCc6CxvtFYgFEyZaIZh_1QBHbgtNXxcoO25TnWUGihx59hXSJkxQyoAgACgYKAVkSARMSFQHGX2Mi4gDgsuZdDxXM4bqRh-duDhoVAUF8yKoVSFPvhsKiZWeQWxgzYpkk0076; __Secure-1PSID=g.a000zQiQ2iZtrczg0AHCc6CxvtFYgFEyZaIZh_1QBHbgtNXxcoO2gHy8dWV-68AojuDVj0dgbQACgYKAUoSARMSFQHGX2Mi45hzLlTkv9cp6sraPMv7KxoVAUF8yKoyjd3kk6EEfKcF_9CytVeq0076; __Secure-3PSID=g.a000zQiQ2iZtrczg0AHCc6CxvtFYgFEyZaIZh_1QBHbgtNXxcoO2G_MkHB0cLppCOxtKHmlaEgACgYKAWQSARMSFQHGX2MiOJIt_6MQagDDhPON_2F7JxoVAUF8yKrl1jCpzINFLDx9Ct5Aq5CO0076; HSID=AnzcV7REJX29HJAP6; SSID=ARLyfEwDa0md9IVQ4; APISID=JYf7YgD9awuRTl6H/ADUlJTNhsaKdRZgXs; SAPISID=O4kzX3hKtV0lcbnd/AzTI6fHxQOqV76j1x; __Secure-1PAPISID=O4kzX3hKtV0lcbnd/AzTI6fHxQOqV76j1x; __Secure-3PAPISID=O4kzX3hKtV0lcbnd/AzTI6fHxQOqV76j1x; NID=525=ZC-J0om7wWVLQCQ6oAKzjnE6d9QPtMkQ-LNvg24y9kv9mumb_GYbf_ETI4fpjlwPU6VR9XslITi0oygYzLnsU6wxMMvjMQTm_oKCFNHknhLhHfAEqkOnkxH95yqtZj1q1ROoapZweOxMnDV3i5P2RzHRpEtH3em7FhlzFrC0YflYEzgjSp3fa9nUtRgbj5v6peC1V1D7sZOZtfIkMB5ue2d3JB4JNW_MciXhr28KbVNkMCNkowiHWoFvJROaab8F1dBCtQ0e2vlS4V5x9XApPF_2dou3zsa58-Vf5wVzYFyo5imZk4WT5FfAonDIQuzDjmev8VjdJZitQBNd3PwNwjas-08HWZY0Gc_R-RgVrkG7L1kA2QNqfb-rgjhad7cGrs6ofKsu1BQFzTPhXwKbDnRMx0SlCz17zgbyt7UG1LFzGwrBJ5y0Xh-ZFZq9o2ay9xVnsy1Dar4L6lmEUGtbeGuF4DBv1YnDIvHL_VIehhcYE9jPn68geY4QtVbTVGXW9JpeNQIB2-KhcGp5geoeL3ooLXIyUnm7QSW-u_Ddh0EUVabuAAlmWiIAylcAwdNpwLWIvVXhtqDZYE2a3xL5trb-db0V5fz5304A4PuEMhZhGO5Lz1bPnF-TBz9PILZWXa5JON6M07KexF49XN4vltvIdsdoS__-7pxbkreUxfjW380OvL9iHpeMArmA4Fdxo0yTRr-3-xp9XXFJqlNBhau6MLU1GZ5IjthvUrmsvVHTy6m0DLWovLQdnGyMZK8i1jXQK5HcaWaWXD-snRLPs2yj5aqZ8CzujAs9LUVv1i0j8jz_bcvhRAAHMpFI0Zu-Shp1mb3eMDhqZDOYuTjue2anW7zrVwn5tkOdwNWelXKBKrcGSTjSJk-tX2Kn5kX7OXGrycrrb4qZ; SIDCC=AKEyXzWGTu0GNaN5Ihoe-6vVTwLfruIhoDGG_hMgX282u4hduBcc1H6bMh5wKmUjzvRsbEmicw; __Secure-1PSIDCC=AKEyXzVCZyN781fTfVlnOTT3aP2z1XHn_5X9YuZvkw9klFXufZ32QGW8nVqQ0-L9lKTFv2PTDw; __Secure-3PSIDCC=AKEyXzWZkuMMjDQyVcW7mscp38B9-vEZAXe_T9YpNPZnyhfNNfqE1ojK0NHI76E8DvuAVxiFhw"
+
+if USE_SIMPLE_LOGGER:
+    logger.remove()
+    logger.add(sys.stderr, format="<level>{level: <8}</level> <green>{message}</green>")  # pyright: ignore[reportUnusedCallResult]
+
+
+def get_image_path(image_name: str) -> Path:
+    return Path(__file__).parent.parent / "images" / image_name
+
+
+__all__ = ["GOOGLE_COOKIES", "IMAGE_BASE_URL", "PROXIES", "get_image_path", "logger"]
